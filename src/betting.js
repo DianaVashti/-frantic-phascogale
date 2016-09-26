@@ -1,0 +1,1 @@
+const bettingPool = 10
