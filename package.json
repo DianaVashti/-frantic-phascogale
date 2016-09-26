@@ -1,0 +1,34 @@
+{
+  "name": "frantic-phascogale-blackjack",
+  "version": "1.0.0",
+  "description": "blackjack console game",
+  "main": "card.js",
+  "scripts": {
+    "start": "node gameStart.js",
+    "test": "Mocha src/spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DianaVashti/frantic-phascogale.git"
+  },
+  "keywords": [
+    "blackjact"
+  ],
+  "author": "Diana Vashti, Sylvan Swierkosz, Alireza Keshanian, Phillip Lorenzo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DianaVashti/frantic-phascogale/issues"
+  },
+  "homepage": "https://github.com/DianaVashti/frantic-phascogale#readme",
+
+  "dependencies": {
+    "colors": "^1.1.2",
+    "lodash": "^4.14.1",
+    "readline": "^1.3.0",
+    "readline-sync": "^1.4.4"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^3.0.2",
+  }
+}
