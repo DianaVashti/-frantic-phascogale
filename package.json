@@ -5,7 +5,7 @@
   "main": "card.js",
   "scripts": {
     "start": "node gameStart.js",
-    "test": "Mocha src/spec"
+    "test": "mocha test"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,6 @@
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "mocha": "^3.0.2",
+    "mocha": "^3.0.2"
   }
 }
