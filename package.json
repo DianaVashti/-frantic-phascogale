@@ -4,7 +4,7 @@
   "description": "blackjack console game",
   "main": "card.js",
   "scripts": {
-    "start": "node gameStart.js",
+    "start": "node src/round.js",
     "test": "mocha test"
   },
   "repository": {

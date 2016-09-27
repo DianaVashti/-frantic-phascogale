@@ -4,10 +4,13 @@ class Card {
     this.rank = rank
   }
   print () {
+    let rankReturn = ""
     if (isNaN(this.rank)) {
-      this.rank = this.rank[0]
+      rankReturn = this.rank[0]
+      return rankReturn + ' of ' + this.suit
+    } else {
+      return this.rank + ' of ' + this.suit
     }
-  return this.rank + ' of ' + this.suit
 	}
 }
 
