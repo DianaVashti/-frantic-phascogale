@@ -2,13 +2,13 @@ import currency from './currency'
 import game from './game'
 
 const CASH = [
-  { type: '💵', value: 10}
+  { type: '💵', value: 100}
 ]
 
 const CLOTHES = [
   { type: '👕', value: 'shirt'}
-  { type: '👞', value: 'shirt'}
-  { type: '👖', value: 'shirt'}
+  { type: '👞', value: 'shoes'}
+  { type: '👖', value: 'pants'}
 ]
 
 class Account {
@@ -42,6 +42,41 @@ class PlayerBet {
     while ( true ) {
       let bet = prompt.forNumber(placeBet)
       return bet
+    }
+  }
+
+  shirtBet() {
+    if( player.cash === 0 ) {
+      this.game.report( this.player, 'you have no money!!!')
+      let placeShirtBet = this.player'> Do you want to wager your shirt?'(+minClothesBet+clothesValueBet+'')
+      while (true) {
+        let shirtsBet = prompt.forNumber(placeShirtBet)
+        return shirtsBet
+      }
+    }
+  }
+
+  shoesBet() {
+    if( player.clothes === 1 ) {
+      this.game.report( this.player, 'you have no shirt!!!')
+      let placeShoesBet = this.player'> Do you want to wager your shoes'(+midClothesBet+clothesValueBet+'')
+      while (true) {
+        let shoeBet = prompt.forNumber(placeShoesBet)
+        return shoeBet
+      }
+    }
+  }
+
+  pantsBet() {
+    if( player.clothes === 2 ) {
+      this.game.report( this.player, 'you have no shoes!!!')
+      let placePantsBet = this.player'> Do you want to wager your pants'(+maxClothesBet+clothesValueBet+'')
+      while (true) {
+        let PantBet = prompt.forNumber(placePantsBet)
+        return pantBet
+      } else {
+        console.log("You have no clothes! Good luck getting home!")
+      }
     }
   }
 }
