@@ -1,4 +1,5 @@
 import currency from './currency'
+import game from './game'
 
 const CASH = [
   { type: '💵', value: 10}
@@ -28,4 +29,19 @@ class Account {
   } else if ( this.clothes.type === '👖'){
     return 'pants'
     }
+}
+
+class PlayerBet {
+  constructor(choices) {
+    this.choices = choices.game
+  }
+
+  makeBet() {
+    this.game.report( this.player, 'you have '+currency( this.account ) )
+    let placeBet = this.player'> Do you want to place your bet?('+minBet(min)+'')
+    while ( true ) {
+      let bet = prompt.forNumber(placeBet)
+      return bet
+    }
+  }
 }
