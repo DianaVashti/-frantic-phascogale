@@ -16,14 +16,18 @@ const ranks = [ace,2,3,4,5,6,7,8,9,10,jack,queen,king]
 
 const createDeck = () => {
   let deck = []
-  suits.forEach(suit => {
-    ranks.forEach(rank => {
-        deck.push(new Card(suit, rank))
+  for (let i = 0; i < 4; i++) {
+    let tempDeck = []
+    suits.forEach(suit => {
+      ranks.forEach(rank => {
+          tempDeck.push(new Card(suit, rank))
+          tempDeck = _.shuffle(tempDeck)
+      })
     })
-  })
-  deck = _.shuffle(deck)
+    deck = deck.concat(tempDeck)
+  }
+
   return deck
 }
-
 
 module.exports = createDeck
