@@ -67,22 +67,22 @@ let playAgain = true
 while ( playAgain ) {
 
   prompt.forOption('Would you like to wager your shirt?', {
-      '[y]es': ()=>{ this.minCBet = true},
-      '[n]o': ()=>{ this.minCBet = false},
+      '[y]es': ()=>{ this.minClothesBet = true},
+      '[n]o': ()=>{ this.minClothesBet = false},
     })
     if (playAgain){ continue }else{ break }
   }
 
   prompt.forSecondOption('Would you like to wager your shoes?', {
-    '[y]es': ()=>{ this.midCBet = true},
-    '[n]o': ()=>{ this.midCBet = false},
+    '[y]es': ()=>{ this.midClothesBet = true},
+    '[n]o': ()=>{ this.midClothesBet = false},
   })
   if (playAgain){ continue }else{ break }
   }
 
   prompt.forFinalOption('Would you like to wager your pants?', {
-    '[y]es': ()=>{ this.maxCBet = true},
-    '[n]o': ()=>{ this.maxCBet = false},
+    '[y]es': ()=>{ this.maxClothesBet = true},
+    '[n]o': ()=>{ this.maxClothesBet = false},
   })
   if (playAgain){ continue }else{ console.log("you're such a loser, lol") }
   }
