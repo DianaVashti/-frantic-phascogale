@@ -29,6 +29,7 @@ class Account {
   } else if ( this.clothes.type === '👖'){
     return 'pants'
     }
+    console.log( new Account() );
 }
 
 class PlayerBet {
