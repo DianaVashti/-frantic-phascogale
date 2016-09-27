@@ -1,3 +1,7 @@
+<<<<<<< HEAD
 node_modules
 scratch
+=======
+node_modules/
+>>>>>>> 0ab996d4b6eb837bd4223715165c76b323c1d366
 *.log
