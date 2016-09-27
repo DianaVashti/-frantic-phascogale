@@ -1,19 +1,44 @@
-import _ from 'lodash'
-import Betting, { CASH, CLOTHES } from './betting'
-import currency from './currency'
+import Hand from './hand'
+
+const CLOTHES = [
+  { type: '👕', value: 'shirt' },
+  { type: '👞', value: 'shoes' },
+  { type: '👖', value: 'pants' }
+]
 
 class Player {
-  constructor() {
-    this.player = player
-    this.player.forEach( account => console.log( account.toString() ))
+  constructor( name, isDealer=false ) {
+    this.name = name
+    this.hand = new Hand( isDealer )
+    this.cash = 100
+    this.clothes = [ ...CLOTHES ]
   }
 
-  cashReducer( type, cash ) {
-    return type.concat(...CLOTHES.map( bank => new Account( cash, clothes ) ))
+  giveCard( card ) {
+    this.hand.addCard( card )
   }
 
-  buildPlayer() {
-    return CASH.reduce( this.cashReducer , [] )
+  bet( amount ) {
+    this.cash -= amount
+
+    return amount
   }
-  console.log(Player)
+
+  hasCash() {
+    return this.cash > 0
+  }
+
+  betClothes() {
+    return this.clothes.pop()
+  }
+
+  hasClothes() {
+    return this.clothes.length > 0
+  }
+
+  toString() {
+    return `${this.name} $${this.cash} ${this.hand.toString()}`
+  }
 }
+
+export default Player

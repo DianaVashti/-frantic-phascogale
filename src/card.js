@@ -3,11 +3,13 @@ class Card {
     this.suit = suit
     this.rank = rank
   }
-  print () {
-    if (isNaN(this.rank)) {
+
+  toString () {
+    if( isNaN( this.rank )) {
       this.rank = this.rank[0]
     }
-  return this.rank + ' of ' + this.suit
+
+    return `${this.rank} of ${this.suit}`
 	}
 }
 
