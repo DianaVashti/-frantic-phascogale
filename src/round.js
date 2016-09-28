@@ -2,7 +2,6 @@ const createDeck = require('./deck')
 const diag = require('readline-sync')
 const col = require('colors')
 const hand = require('./hand')
-// const dealerLogic = require('./dealerLogic')
 
 let playerHand = []
 let dealerHand = []
@@ -23,7 +22,7 @@ const roundOutcome = () => {
     console.log("House wins ☹️ ")
     playerWin = false
   }
-  else if ((handTotal(playerHand) > handTotal(dealerHand) && (handTotal(dealerHand) < 21 && handTotal(playerHand) < 21)) ||  handTotal(playerHand) <= 21 && handTotal(dealerHand) > 21)  {
+  else if ((handTotal(playerHand) > handTotal(dealerHand) && (handTotal(dealerHand) < 21 && handTotal(playerHand) < 21)) ||  handTotal(playerHand) <= 21 && handTotal(dealerHand) > 21) {
     console.log("You win!")
     playerWin = true
   } else if (handTotal(playerHand) == handTotal(dealerHand)) {
@@ -64,6 +63,7 @@ const checkBJ = (handTotal) => {
   if (handTotal == 21) {
     console.log("Blackjack! You win :D")
     roundOutcome()
+    playerWin = true
   }
 }
 
@@ -77,6 +77,8 @@ const dealInit = () => {
 
 //Round order of operations
 const roundCycle = () => {
+  playerHand = []
+  dealerHand = []
   roundStart = true
   dealInit()
   let hitStay = ''
@@ -108,12 +110,20 @@ while (roundStart == true) {
     }
 
   }
-console.log(playerWin)
-if (playerWin == true) {
-  console.log("Give pot to player")
-} else if (playerWin == false){
-  console.log("House takes pot")
+
+  if (playerWin == true) {
+    console.log("Give pot to player")
+  } else if (playerWin == false){
+    console.log("House takes pot")
+  }
+
+let end = diag.question("End game? y to end")
+if (end == 'y') {
+  console.log("game over")
+} else {
+  roundCycle()
 }
+
 }
 
 //Tests
@@ -124,12 +134,10 @@ const theDeckLength = () => {
 
 //the following is pseudo code to REMOVE ME LATER!!!
 // round:
-// if outcome != bust log score
 //
 // ai goes second,
 // utilizes ai Logic to execute round
 //
-// does math to calculate scores and determines winner of round
 //
 // if player wins takes pot and stores new bank
 // if ai wins wins takes pot and stores new bank
@@ -141,6 +149,4 @@ module.exports = {
   dealInit,
   playerHand,
   roundCycle,
-  handTotal,
-  addCard
 }
