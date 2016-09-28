@@ -2,12 +2,36 @@ const createDeck = require('./deck')
 const diag = require('readline-sync')
 const col = require('colors')
 const hand = require('./hand')
+// const dealerLogic = require('./dealerLogic')
 
 let playerHand = []
 let dealerHand = []
+let playerBank = [20,["👕","👖","👞"]]
+let dealerBank = [10000000000000,[]]
 let globalDeck = createDeck()
+let roundStart = true
+let playerWin = "empty"
 
 //Round Functions
+const dealerLogic = (playerHand, dealerHand) => {
+  while (handTotal(playerHand) > handTotal(dealerHand)) {
+    addCard(dealerHand)
+  }
+}
+const roundOutcome = () => {
+  if (handTotal(playerHand) < handTotal(dealerHand) && handTotal(dealerHand) <= 21) {
+    console.log("House wins ☹️ ")
+    playerWin = false
+  }
+  else if ((handTotal(playerHand) > handTotal(dealerHand) && (handTotal(dealerHand) < 21 && handTotal(playerHand) < 21)) ||  handTotal(playerHand) <= 21 && handTotal(dealerHand) > 21)  {
+    console.log("You win!")
+    playerWin = true
+  } else if (handTotal(playerHand) == handTotal(dealerHand)) {
+    console.log("Tie, re-deal")
+  }
+  roundStart = false
+}
+
 const checkDeckLength = () => {
   if (globalDeck.length < 10) {
     globalDeck = createDeck()
@@ -26,12 +50,20 @@ const handTotal = (hand) => {
         total += card.rank
       }
     }
+    for (let aceSearch of hand) {
+      if (total > 21) {
+        if (aceSearch.rank[0] == "A") {
+          total -= 10
+        }
+      }
+    }
     return total
 }
 
 const checkBJ = (handTotal) => {
   if (handTotal == 21) {
     console.log("Blackjack! You win :D")
+    roundOutcome()
   }
 }
 
@@ -43,48 +75,55 @@ const dealInit = () => {
   addCard(dealerHand)
 }
 
-const roundOutcome = () => {
-  if (handTotal(playerHand) > handTotal(dealerHand)) {
-    return //true or false, or win or lose bank pending
-  }
-}
-
 //Round order of operations
-dealInit()
+const roundCycle = () => {
+  roundStart = true
+  dealInit()
+  let hitStay = ''
 
-console.log(hand.printHand(dealerHand))
-console.log(hand.printHand(playerHand, "p"))
+  console.log(hand.printHand(dealerHand))
+  console.log(hand.printHand(playerHand, "p"))
 
-checkBJ(handTotal(playerHand))
-//if your win by BJ end round, send winnings to bank
+  checkBJ(handTotal(playerHand))
 
+while (roundStart == true) {
+    hitStay = diag.question("Hit or Stay? (h/s)")
+    console.log(hitStay)
+    if (hitStay !== 'h' && hitStay !== 's') {
+      console.log("Invalid input, try again")
+      continue
+    } else if (hitStay == 'h') {
+      addCard(playerHand)
+      console.log(hand.printHand(dealerHand))
+      console.log(hand.printHand(playerHand, "p"))
+      if (handTotal(playerHand) > 21) {
+        console.log('Bust! Sorry, you lose')
+        roundOutcome()
+      }
+    } else if (hitStay == 's') {
+      console.log("\nDealer's turn\n")
+      dealerLogic(playerHand, dealerHand)
+      console.log(hand.printHand(dealerHand, "d"))
+      roundOutcome()
+    }
 
-//this happens last
-roundOutcome()
+  }
+console.log(playerWin)
+if (playerWin == true) {
+  console.log("Give pot to player")
+} else if (playerWin == false){
+  console.log("House takes pot")
+}
+}
 
 //Tests
 const theDeckLength = () => {
   return globalDeck.length
 }
 
-module.exports = {
-  theDeckLength,
-  dealInit,
-  playerHand
-}
 
 //the following is pseudo code to REMOVE ME LATER!!!
-
-
-// show hands in console (ai player hand one up one down)
-//
-// begin round
-//
 // round:
-// player goes first,
-// if natural blackjack, game ends, player wins
-// if != natural blackjack, (hit || stay) loop until (stay || bust)
-// if outcome == bust, player loses
 // if outcome != bust log score
 //
 // ai goes second,
@@ -96,3 +135,12 @@ module.exports = {
 // if ai wins wins takes pot and stores new bank
 //
 // loop back to begin round again unless either player or ai are out of money
+
+module.exports = {
+  theDeckLength,
+  dealInit,
+  playerHand,
+  roundCycle,
+  handTotal,
+  addCard
+}
