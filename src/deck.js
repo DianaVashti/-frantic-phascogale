@@ -1,10 +1,11 @@
 const Card = require('./card')
 const _ = require('lodash')
+const col = require('colors')
 
-const heart = '♥️'
-const spade = '♠️'
-const diamond = '♦️'
-const club = '♣️'
+const heart = col.bgWhite('♥️ ')
+const spade = col.bgWhite('♠️ ')
+const diamond = col.bgWhite('♦️ ')
+const club = col.bgWhite('♣️ ')
 
 const ace = ['A',11]
 const king = ['K',10]
