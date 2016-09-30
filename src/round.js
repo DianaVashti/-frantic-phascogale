@@ -61,7 +61,7 @@ const determineWinner = () => {
     console.log("You win!")
     playerWin = true
   } else if (handTotal(playerHand) == handTotal(dealerHand)) {
-    console.log("Tie, try again")
+    console.log(col.bgBlue.white(" Tie, try again "))
     if (isNaN(bet)) {
       playerBank[1].unshift(bet)
     }
