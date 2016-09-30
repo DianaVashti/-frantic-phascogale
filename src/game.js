@@ -10,10 +10,10 @@ setTimeout(function(){
   diag.question(col.bgWhite.black(" Hit return to start game!"))
   round.spacer()
   playGame()
-}, 2500)
+}, 100)
 
 const playGame = () => {
-  while( round.roundCycle() ) {
+  while( !round.roundCycle() ) {
     round.spacer()
     console.log(col.bgWhite.black(" Next round:"))
     round.spacer()
