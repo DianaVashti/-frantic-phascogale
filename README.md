@@ -1,5 +1,4 @@
-# -frantic-phascogale
-Console Blackjack Simulator
+# Console Blackjack Simulator
 
 ## Description
 
