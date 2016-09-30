@@ -9,8 +9,8 @@ let dealerHand = []
 let playerBank = [20,["👕","👖","👞"]]
 let dealerBank = []
 let globalDeck = createDeck()
-let roundStart = true
-let playerWin = "empty"
+let contPlaying = true
+let playerWin = ''
 let bet = 0
 let endGame = false
 let isTie = false
@@ -67,7 +67,7 @@ const determineWinner = () => {
     }
     isTie = true
   }
-  roundStart = false
+  contPlaying = false
 }
 
 const checkDeckLength = () => {
@@ -143,7 +143,7 @@ const placeBet = () => {
 }
 
 const hitOrStay = () => {
-  while (roundStart == true) {
+  while (contPlaying == true) {
       hitStay = diag.question("Hit or Stay? (h/s): ")
       spacer()
       if (hitStay !== 'h' && hitStay !== 's') {
@@ -167,6 +167,11 @@ const hitOrStay = () => {
 
     }
 }
+const promptToContinue = () => {
+  let end = diag.question("\nHit return to continue to next round\nBored? Type 'y' to end game: ")
+  spacer()
+  endGame = ( end === 'y' )
+}
 
 const dealInit = () => {
   checkDeckLength()
@@ -180,7 +185,8 @@ const dealInit = () => {
 const roundCycle = () => {
   playerHand = []
   dealerHand = []
-  roundStart = true
+  isTie = false
+  contPlaying = true
   endGame = false
   bet = 0
   displayBank()
@@ -190,20 +196,11 @@ const roundCycle = () => {
   console.log(hand.printHand(playerHand, "p"))
   checkBJ( handTotal(playerHand) )
   hitOrStay()
-  if( isTie ) {
-    isTie = false
-    return true
-  }
+  if(isTie) return endGame
   bettingOutcome()
   promptToContinue()
 
-  return ! endGame
-}
-
-const promptToContinue = () => {
-  let end = diag.question("\nHit return to continue to next round\nBored? Type 'y' to end game: ")
-  spacer()
-  endGame = ( end === 'y' )
+  return endGame
 }
 
 //Tests
