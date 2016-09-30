@@ -17,6 +17,9 @@ let isTie = false
 let hitStay = ''
 
 //Round Functions
+const spacer = () => {
+    console.log(" ")
+}
 
 const bettingOutcome = () => {
   if (playerWin == true) {
@@ -73,14 +76,7 @@ const checkDeckLength = () => {
   }
 }
 
-// let testCard = undefined
-
 const addCard = (hand) => {
-  // if( ! testCard ) {
-  //   testCard = globalDeck.shift()
-  // }
-  //
-  // hand.push( testCard )
   hand.push(globalDeck.shift())
 }
 
@@ -105,7 +101,7 @@ const handTotal = (hand) => {
 
 const checkBJ = (handTotal) => {
   if (handTotal == 21) {
-    console.log("Blackjack! You win :D")
+    console.log(col.bgWhite.black(" 🎉 🕸 🎯 🎱 💛  BLACKJACK! You win 🎉 💥 👍 🐓 ⚡️  "))
     determineWinner()
     playerWin = true
   }
@@ -129,7 +125,7 @@ const displayBank = () => {
 const placeBet = () => {
   if (playerBank[0] > 0) {
     bet = diag.question("Place your bet: \n$")
-    console.log(" ")
+    spacer()
     while (bet == 0) {
       bet = diag.question("\nYou cannot bet $0.\nPlace your bet again: \n$")
     }
@@ -149,7 +145,7 @@ const placeBet = () => {
 const hitOrStay = () => {
   while (roundStart == true) {
       hitStay = diag.question("Hit or Stay? (h/s): ")
-      console.log(" ")
+      spacer()
       if (hitStay !== 'h' && hitStay !== 's') {
         console.log("Invalid input, try again")
         continue
@@ -206,7 +202,7 @@ const roundCycle = () => {
 
 const promptToContinue = () => {
   let end = diag.question("\nHit return to continue to next round\nBored? Type 'y' to end game: ")
-  console.log(" ")
+  spacer()
   endGame = ( end === 'y' )
 }
 
@@ -222,5 +218,6 @@ module.exports = {
   dealInit,
   playerHand,
   roundCycle,
-  addCard
+  addCard,
+  spacer
 }

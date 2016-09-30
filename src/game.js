@@ -8,15 +8,15 @@ console.log ("You start with $20, a shirt(👕 ), pants(👖 ) and shoes(👞 )\
 
 setTimeout(function(){
   diag.question(col.bgWhite.black(" Hit return to start game!"))
-  console.log(" ")
+  round.spacer()
   playGame()
-}, 100)
+}, 2500)
 
 const playGame = () => {
   while( round.roundCycle() ) {
-    console.log(" ")
+    round.spacer()
     console.log(col.bgWhite.black(" Next round:"))
-    console.log(" ")
+    round.spacer()
   }
     console.log( col.red('Game over\n') )
 }
