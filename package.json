@@ -4,7 +4,7 @@
   "description": "blackjack console game",
   "main": "card.js",
   "scripts": {
-    "start": "node --use_strict src/game.js",
+    "start": "node src/game.js",
     "test": "mocha test"
   },
   "repository": {
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/DianaVashti/frantic-phascogale.git"
   },
   "keywords": [
-    "blackjact"
+    "blackjack"
   ],
   "author": "Diana Vashti, Sylvan Swierkosz, Alireza Keshanian, Phillip Lorenzo",
   "license": "MIT",
