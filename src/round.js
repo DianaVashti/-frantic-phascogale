@@ -2,22 +2,54 @@ const createDeck = require('./deck')
 const diag = require('readline-sync')
 const col = require('colors')
 const hand = require('./hand')
+const _ = require('lodash')
 
 let playerHand = []
 let dealerHand = []
 let playerBank = [20,["👕","👖","👞"]]
-let dealerBank = [10000000000000,[]]
+let dealerBank = []
 let globalDeck = createDeck()
 let roundStart = true
 let playerWin = "empty"
+let bet = 0
+let endGame = false
+let isTie = false
+let hitStay = ''
 
 //Round Functions
+
+const bettingOutcome = () => {
+  if (playerWin == true) {
+    if (isNaN(bet)) {
+      playerBank[1].unshift(bet)
+      if (dealerBank.length > 0) {
+        playerBank[1].unshift(dealerBank.shift())
+      } else {
+        playerBank[0] = _.add(playerBank[0], 10)
+      }
+    } else {
+      playerBank[0] = _.add(playerBank[0], bet)
+    }
+  } else if (playerWin == false) {
+    if (playerBank[1].length == 0) {
+      console.log(col.bgYellow.black("\n     You ain't got no money take your broke ass home!\n\n                 Game over"))
+      process.exit()
+    }
+    if (isNaN(bet)) {
+      dealerBank.unshift(bet)
+    } else {
+      playerBank[0] = _.subtract(playerBank[0], bet)
+    }
+  }
+}
+
 const dealerLogic = (playerHand, dealerHand) => {
   while (handTotal(playerHand) > handTotal(dealerHand)) {
     addCard(dealerHand)
   }
 }
-const roundOutcome = () => {
+
+const determineWinner = () => {
   if (handTotal(playerHand) < handTotal(dealerHand) && handTotal(dealerHand) <= 21) {
     console.log("House wins ☹️ ")
     playerWin = false
@@ -26,7 +58,11 @@ const roundOutcome = () => {
     console.log("You win!")
     playerWin = true
   } else if (handTotal(playerHand) == handTotal(dealerHand)) {
-    console.log("Tie, re-deal")
+    console.log("Tie, try again")
+    if (isNaN(bet)) {
+      playerBank[1].unshift(bet)
+    }
+    isTie = true
   }
   roundStart = false
 }
@@ -36,7 +72,15 @@ const checkDeckLength = () => {
     globalDeck = createDeck()
   }
 }
+
+// let testCard = undefined
+
 const addCard = (hand) => {
+  // if( ! testCard ) {
+  //   testCard = globalDeck.shift()
+  // }
+  //
+  // hand.push( testCard )
   hand.push(globalDeck.shift())
 }
 
@@ -62,9 +106,70 @@ const handTotal = (hand) => {
 const checkBJ = (handTotal) => {
   if (handTotal == 21) {
     console.log("Blackjack! You win :D")
-    roundOutcome()
+    determineWinner()
     playerWin = true
   }
+}
+const displayBank = () => {
+  let output = "You have $"
+  const printBank = (item) => {
+    if (typeof item == "number") {
+      output += item + ", "
+    } else {
+      for (let i = 0; i < item.length; i++) {
+        output += item[i] + "  "
+      }
+    }
+  }
+  playerBank.forEach(printBank)
+  output += "\n"
+  return console.log(output)
+}
+
+const placeBet = () => {
+  if (playerBank[0] > 0) {
+    bet = diag.question("Place your bet: \n$")
+    console.log(" ")
+    while (bet == 0) {
+      bet = diag.question("\nYou cannot bet $0.\nPlace your bet again: \n$")
+    }
+    while (isNaN(bet)) {
+      bet = diag.question("Invalid input, please enter a number.\nPlace your bet again: \n$")
+    }
+    if (bet > playerBank[0]) {
+      bet = diag.question("\nYou don't have enough money to make that bet.\nHow foolish you are.\nPlace your bet again: \n$")
+    }
+    bet = parseInt(bet)
+  } else if (playerBank[0] == 0) {
+    console.log("You are out of money, you bet your " + playerBank[1][0] + "\n")
+    bet = playerBank[1].shift()
+  }
+}
+
+const hitOrStay = () => {
+  while (roundStart == true) {
+      hitStay = diag.question("Hit or Stay? (h/s): ")
+      console.log(" ")
+      if (hitStay !== 'h' && hitStay !== 's') {
+        console.log("Invalid input, try again")
+        continue
+      } else if (hitStay == 'h') {
+        addCard(playerHand)
+        console.log(hand.printHand(dealerHand))
+        console.log(hand.printHand(playerHand, "p"))
+        if (handTotal(playerHand) > 21) {
+          console.log('Bust! Sorry, you lose')
+          determineWinner()
+          playerWin = false
+        }
+      } else if (hitStay == 's') {
+        console.log("Dealer's turn:\n")
+        dealerLogic(playerHand, dealerHand)
+        console.log(hand.printHand(dealerHand, "d"))
+        determineWinner()
+      }
+
+    }
 }
 
 const dealInit = () => {
@@ -80,50 +185,29 @@ const roundCycle = () => {
   playerHand = []
   dealerHand = []
   roundStart = true
+  endGame = false
+  bet = 0
+  displayBank()
+  placeBet()
   dealInit()
-  let hitStay = ''
-
   console.log(hand.printHand(dealerHand))
   console.log(hand.printHand(playerHand, "p"))
-
-  checkBJ(handTotal(playerHand))
-
-while (roundStart == true) {
-    hitStay = diag.question("Hit or Stay? (h/s)")
-    console.log(hitStay)
-    if (hitStay !== 'h' && hitStay !== 's') {
-      console.log("Invalid input, try again")
-      continue
-    } else if (hitStay == 'h') {
-      addCard(playerHand)
-      console.log(hand.printHand(dealerHand))
-      console.log(hand.printHand(playerHand, "p"))
-      if (handTotal(playerHand) > 21) {
-        console.log('Bust! Sorry, you lose')
-        roundOutcome()
-      }
-    } else if (hitStay == 's') {
-      console.log("\nDealer's turn\n")
-      dealerLogic(playerHand, dealerHand)
-      console.log(hand.printHand(dealerHand, "d"))
-      roundOutcome()
-    }
-
+  checkBJ( handTotal(playerHand) )
+  hitOrStay()
+  if( isTie ) {
+    isTie = false
+    return true
   }
+  bettingOutcome()
+  promptToContinue()
 
-  if (playerWin == true) {
-    console.log("Give pot to player")
-  } else if (playerWin == false){
-    console.log("House takes pot")
-  }
-
-let end = diag.question("End game? y to end")
-if (end == 'y') {
-  console.log("game over")
-} else {
-  roundCycle()
+  return ! endGame
 }
 
+const promptToContinue = () => {
+  let end = diag.question("\nHit return to continue to next round\nBored? Type 'y' to end game: ")
+  console.log(" ")
+  endGame = ( end === 'y' )
 }
 
 //Tests
@@ -131,17 +215,6 @@ const theDeckLength = () => {
   return globalDeck.length
 }
 
-
-//the following is pseudo code to REMOVE ME LATER!!!
-// round:
-//
-// ai goes second,
-// utilizes ai Logic to execute round
-//
-//
-// if player wins takes pot and stores new bank
-// if ai wins wins takes pot and stores new bank
-//
 // loop back to begin round again unless either player or ai are out of money
 
 module.exports = {
@@ -149,4 +222,5 @@ module.exports = {
   dealInit,
   playerHand,
   roundCycle,
+  addCard
 }
