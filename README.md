@@ -24,7 +24,7 @@ _What are some appropriate quality objectives for this goal? These are statement
 
 ---
 ## Diagram explaining relationship of functions in round.js
-![Mind Map](https://github.com/DianaVashti/frantic-phascogale/blob/master/mindMap.tiff)
+![Mind Map](https://github.com/DianaVashti/frantic-phascogale/blob/master/mindMap.jpg)
 <!-- LICENSE -->
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
