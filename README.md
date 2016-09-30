@@ -6,14 +6,13 @@ Console Blackjack Simulator
 The goal of this project is to build an asynchronous Javascript blackjack game for the console using Node.js.
 
 ## Specifications
-- [ ] Functions Tested w/ Mocha
-- [ ] Handles basic rules of blackjack
-   - [ ] Bust on 21
-   - [ ] Player can hit or stay
-   - [ ] Player loses if dealer has more points but hasn't busted
-   - [ ] Player wins if dealer has fewer points at end of round
-   - [ ] Bust on 21
-- [ ] Game includes betting system and bank
+- [x] Functions Tested w/ Mocha
+- [x] Handles basic rules of blackjack
+   - [x] Bust on 21
+   - [x] Player can hit or stay
+   - [x] Player loses if dealer has more points but hasn't busted
+   - [x] Player wins if dealer has fewer points at end of round
+- [x] Game includes betting system and bank
 - [X] The artifact produced is properly licensed, preferably with the [MIT license][mit-license].
 
 ## Quality Rubric
