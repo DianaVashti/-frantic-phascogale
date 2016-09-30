@@ -23,7 +23,8 @@ _What are some appropriate quality objectives for this goal? These are statement
 - Code is clear and concise (no extraneous commented code, variables and functions are meaningfully named): 50
 
 ---
-
+## Diagram explaining relationship of functions in round.js
+[https://github.com/DianaVashti/frantic-phascogale/blob/master/mindMap.tiff]
 <!-- LICENSE -->
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
